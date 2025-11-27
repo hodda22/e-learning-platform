@@ -13,7 +13,7 @@ A simple e-learning platform prototype to demonstrate user authentication, cours
 
 ## Team
 - hodda – Frontend
-- teammate – Backend / UI / Documentation
+- eman – Backend / UI / Documentation
 
 ## How to run locally
 1. git clone <repo-url>
