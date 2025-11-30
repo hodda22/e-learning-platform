@@ -1,12 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>E-Learning Platform</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>E-Learning Platform</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Welcome to the E-Learning Platform</h1>
-    <p>Simple demo for Phase 1</p>
+  <!-- Top Nav -->
+  <header class="navbar">
+    <div class="logo">E-Learning</div>
+    <nav>
+      <button class="nav-btn" data-section="home">Home</button>
+      <button class="nav-btn" data-section="courses">Courses</button>
+      <button class="nav-btn" data-section="dashboard">Dashboard</button>
+      <button class="nav-btn" data-section="login">Login</button>
+      <button class="nav-btn outlined" data-section="signup">Sign up</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME SECTION -->
+    <section id="home" class="section active">
+      <div class="hero">
+        <h1>Learn anything, anytime.</h1>
+        <p>
+          Simple E-Learning prototype for our Software Engineering project (Phase 1).
+        </p>
+        <button class="primary-btn" data-section="signup">Get Started</button>
+      </div>
+    </section>
+
+    <!-- COURSES SECTION -->
+    <section id="courses" class="section">
+      <h2>Available Courses</h2>
+      <p class="section-subtitle">
+        Fetched from backend if available, otherwise using fallback data.
+      </p>
+      <div id="courses-list" class="cards-grid">
+        <!-- Courses will be injected by script.js -->
+      </div>
+    </section>
+
+    <!-- DASHBOARD SECTION (placeholder) -->
+    <section id="dashboard" class="section">
+      <h2>Student Dashboard (Placeholder)</h2>
+      <p>
+        This is just a static placeholder for Phase 1. In later phases, this can show
+        enrolled courses, progress, etc.
+      </p>
+      <div class="cards-grid">
+        <div class="card">
+          <h3>Your enrolled courses</h3>
+          <p>Not implemented yet. Backend is ready, UI prototype only.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGIN SECTION -->
+    <section id="login" class="section auth-section">
+      <div class="auth-card">
+        <h2>Login</h2>
+        <form>
+          <label>Email</label>
+          <input type="email" placeholder="you@example.com" required />
+
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" required />
+
+          <button type="submit" class="primary-btn full-width">Login</button>
+        </form>
+        <p class="hint">
+          No real authentication in Phase 1 – this is UI only.
+        </p>
+      </div>
+    </section>
+
+    <!-- SIGNUP SECTION -->
+    <section id="signup" class="section auth-section">
+      <div class="auth-card">
+        <h2>Create an account</h2>
+        <form>
+          <label>Full name</label>
+          <input type="text" placeholder="Your Name" required />
+
+          <label>Email</label>
+          <input type="email" placeholder="you@example.com" required />
+
+          <label>Password</label>
+          <input type="password" placeholder="Choose a password" required />
+
+          <label>Confirm password</label>
+          <input type="password" placeholder="Repeat password" required />
+
+          <button type="submit" class="primary-btn full-width">Sign up</button>
+        </form>
+        <p class="hint">
+          This is a mock signup form for the prototype – no data is stored.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© 2025 E-Learning Platform – Phase 1 Prototype</small>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
