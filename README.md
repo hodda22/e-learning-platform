@@ -1,30 +1,75 @@
-# e-learning-platform
-# E-Learning Platform - Phase 1
+# E-Learning Platform – Phase 1
 
-## Project Abstract
-A simple e-learning platform prototype to demonstrate user authentication, course listing, and a basic dashboard.
+## About the Project
+This is our E-Learning Platform project.  
+In Phase 1, our goal is mainly to set up the project on GitHub and organize our work.  
+There is no real coding yet — we are only preparing the structure, issues, branches, and documentation.
 
-## MVP Features (Phase 1)
-- Home page
-- Login / Signup (UI only)
-- Dashboard (placeholder)
-- Course page (static)
-- GitHub Issues + Project Board + Branching workflow
+---
 
-## Team
-- hodda – Frontend
-- teammate – Backend / UI / Documentation
+## What We Did in Phase 1
 
-## How to run locally
-1. git clone <repo-url>
-2. cd e-learning-platform
-3. npm install
-4. npm start
+### 1. GitHub Repository
+- We created the main repository for the project.
+- All three team members were added as collaborators.
 
-## Branching Strategy
-- Create a branch for each feature: feature/<name>
-- Use Pull Requests to merge into main
-- Every commit must be clear and descriptive
+### 2. GitHub Issues
+- We created several issues to plan the tasks of the project.
+- Each issue has a description, labels, and an assigned team member.
+- All issues are connected to the project board.
+
+### 3. Project Board
+We set up a simple Kanban board with:
+- **To Do**
+- **In Progress**
+- **Done**
+
+We move each issue between the columns based on progress.
+
+### 4. Branches
+Each of us created a branch to work on:
+- `hodda`
+- `eman`
+- `ryad`
+
+For every issue, we create a separate branch, work on it, then open a Pull Request to merge it.
+
+### 5. Basic Project Structure
+We added a simple folder structure to organize future work:
+
+e-learning-platform/
+├── frontend/
+├── backend/
+├── pages/
+└── README.md
+
+
+There is no real code yet — just empty files and basic templates to prepare for Phase 2.
+
+### 6. Documentation
+We wrote this README to explain what we have done in Phase 1 and how the project is organized.
+
+---
+
+## Team Members
+- Hodda  
+- Eman  
+- Ryad  
+
+---
+
+## Summary
+Phase 1 is mainly about:
+- Setting up the repo  
+- Creating issues  
+- Organizing the project board  
+- Making branches  
+- Preparing a clean structure  
+- Writing documentation  
+
+We are now ready to start actual development in **Phase 2**.
+
+
 
 
 
