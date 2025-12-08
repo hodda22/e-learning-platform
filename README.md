@@ -1,47 +1,74 @@
-# e-learning-platform
-# E-Learning Platform - Phase 1
+# E-Learning Platform – Phase 1
 
 ## Project Abstract
-A simple e-learning platform prototype to demonstrate user authentication (UI only), course listing, and a basic student dashboard placeholder.
 
-## MVP Features (Phase 1)
-- Home page
-- Login / Signup (UI only, no real auth)
-- Dashboard (placeholder)
-- Courses section (reads from backend API or fallback data)
-- GitHub Issues + Project Board + Branching workflow
+A simple e-learning platform prototype to demonstrate:
 
-## Team
-- hodda – Frontend (pages, navigation, basic UI)
-- eman – Backend (Node.js API for courses)
-- ryad – CSS & Documentation (styling, layout, README)
+- User authentication **UI only** (no real login logic yet)
+- Course listing from a backend API (with fallback data in the frontend)
+- A basic student dashboard placeholder
+
+This is for our Software Engineering project – **Phase 1** (prototype).
 
 ---
 
-## How to run locally
+## MVP Features (Phase 1)
 
-### Frontend (Hodda & Ryad)
+- Home page
+- Login / Signup (UI only, no real auth)
+- Dashboard (placeholder)
+- Courses section  
+  - Reads from backend API: `GET /api/courses`  
+  - Uses fallback data if backend is not running
+- GitHub Issues + Project Board + Branching workflow
+
+---
+
+## Team
+
+- **hodda** – Frontend (pages, navigation, basic UI)
+- **eman** – Backend (Node.js API for courses)
+- **ryad** – CSS & Documentation (styling, layout, README)
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Plain **HTML / CSS / JavaScript**
+- No frameworks, no build step
+- Lives in the `frontend/` folder
+
+### Backend
+
+- **Node.js**
+- **Express.js**
+- Port: **4000**  
+  (macOS uses port 5000 for AirPlay, so we use 4000 instead.)
+
+---
+
+## How to Run Locally
+
+### 1. Frontend (Hodda & Ryad)
 
 The frontend is a simple static prototype.
 
-- Open the file:
+Open the file:
 
 ```bash
 frontend/index.html
 You can:
-Double-click it in Finder to open in the browser, or
-In VS Code: right-click index.html → “Open with Live Server” (optional).
+Double-click it in Finder / Explorer to open in the browser, or
+In VS Code: right-click index.html → “Open with Live Server” (optional)
 This will show:
 Home section
 Courses section
 Dashboard placeholder
 Login / Signup forms (UI only)
-Backend (Eman)
-Tech Stack
-Node.js
-Express.js
-Port: 4000 (macOS uses port 5000 for AirPlay, so backend uses 4000)
-How to run the backend
+2. Backend (Eman)
+From the project root:
 cd backend
 npm install
 npm run dev
@@ -58,11 +85,35 @@ Example Response (GET /api/courses)
   { "id": 3, "title": "JavaScript for Frontend", "level": "Intermediate" }
 ]
 Notes
-No database yet (data stored directly in server.js).
-Frontend calls http://localhost:4000/api/courses.
-If backend is not running, frontend uses fallback data.
+No database yet – data is stored directly in server.js.
+Frontend calls: http://localhost:4000/api/courses.
+If the backend is not running, the frontend uses fallback data (in script.js).
+Project Structure
+e-learning-platform/
+├── backend/
+│   ├── server.js        # Express server + courses endpoints
+│   └── package.json
+├── frontend/
+│   ├── index.html       # Static UI (Home, Courses, Dashboard, Auth)
+│   ├── style.css        # Styling (Ryad)
+│   └── script.js        # Navigation + API call + fallback data
+└── README.md
+Frontend Behaviour (Phase 1)
+Top navbar buttons switch between sections using JS:
+Home
+Courses
+Dashboard
+Login
+Sign up
+The "Get Started" button on the Home section scrolls to / displays the Sign up form.
+The Courses section:
+Tries to load from GET /api/courses
+If the request fails → displays 3 fallback dummy courses.
 Branching Strategy
-Create a branch for each feature: feature/<name> (or hodda/..., eman/..., ryad/...)
-Use Pull Requests to merge into main
-Every commit message must be clear and descriptive
+Create a branch for each feature, for example:
+hodda/navigation-home
+eman/api-courses
+ryad/layout-and-css
+Use Pull Requests to merge into main.
+Every commit message must be clear and descriptive.
 Never push features directly to main
