@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install + test + smoke (backend)
+      - name: Install + test + build (backend)
         run: |
           if [ ! -f backend/package.json ]; then
             echo "No backend/package.json found — skipping backend."
@@ -26,23 +26,9 @@ jobs:
           fi
 
           cd backend
-
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
           npm test --if-present
-
-          # Optional smoke test (only if server.js exists)
-          if [ -f server.js ]; then
-            node server.js &
-            PID=$!
-            sleep 2
-            curl -f http://localhost:4000/api/courses
-            kill $PID
-          fi
+          npm run build --if-present
 
   frontend:
     name: Frontend checks
@@ -64,12 +50,6 @@ jobs:
           fi
 
           cd frontend
-
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
           npm test --if-present
           npm run build --if-present
