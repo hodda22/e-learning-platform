@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnFlow | E-Learning Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">LearnFlow</span>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home" onclick="showPage('home')">Home</a>
+                <a href="#" class="nav-link" data-page="courses" onclick="showPage('courses')">Courses</a>
+                <a href="#" class="nav-link" data-page="dashboard" onclick="showPage('dashboard')" id="dashboardLink" style="display: none;">Dashboard</a>
+            </div>
+            <div class="nav-auth" id="authButtons">
+                <button class="btn btn-ghost" onclick="openModal('loginModal')">Login</button>
+                <button class="btn btn-primary" onclick="openModal('signupModal')">Sign Up</button>
+            </div>
+            <div class="nav-user" id="userMenu" style="display: none;">
+                <span class="user-role-badge" id="userRoleBadge"></span>
+                <span class="user-greeting">Hello, <span id="userName"></span></span>
+                <button class="btn btn-ghost" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="homePage" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">✦ Start Learning Today</div>
+                    <h1 class="hero-title">
+                        Unlock Your <span class="gradient-text">Potential</span> With Expert-Led Courses
+                    </h1>
+                    <p class="hero-description">
+                        Discover a world of knowledge at your fingertips. Browse courses, track your progress, and achieve your learning goals with our intuitive platform.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-lg" onclick="showPage('courses')">
+                            Explore Courses
+                            <span class="btn-arrow">→</span>
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="openModal('signupModal')">
+                            Get Started Free
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Courses</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">10k+</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Satisfaction</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <span class="card-icon">📊</span>
+                        <span>Track Progress</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <span class="card-icon">🎯</span>
+                        <span>Complete Tasks</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <span class="card-icon">📁</span>
+                        <span>Manage Files</span>
+                    </div>
+                    <div class="hero-shape"></div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h2 class="section-title">Why Choose <span class="gradient-text">LearnFlow</span>?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Expert Courses</h3>
+                        <p>Access high-quality courses created by industry experts across various domains.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your learning journey with detailed progress tracking and task management.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Note Taking</h3>
+                        <p>Create and manage your learning notes with our built-in file editor.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <h3>Achievements</h3>
+                        <p>Earn certificates and track your accomplishments as you complete courses.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Courses Page -->
+        <section id="coursesPage" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Explore <span class="gradient-text">Courses</span></h1>
+                <p class="page-subtitle">Browse our collection of expert-led courses and start your learning journey</p>
+            </div>
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Courses will be dynamically inserted -->
+            </div>
+        </section>
+
+        <!-- Course Details Page -->
+        <section id="courseDetailsPage" class="page">
+            <button class="back-btn" onclick="showPage('courses')">
+                ← Back to Courses
+            </button>
+            <div class="course-details" id="courseDetails">
+                <!-- Course details will be dynamically inserted -->
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboardPage" class="page">
+            <div class="dashboard-header">
+                <h1 class="page-title">My <span class="gradient-text">Dashboard</span></h1>
+                <p class="page-subtitle" id="dashboardSubtitle">Manage your courses, tasks, and files</p>
+            </div>
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="switchTab('courses')" id="tabCourses">My Courses</button>
+                <button class="tab-btn" onclick="switchTab('files')" id="tabFiles">My Files</button>
+                <button class="tab-btn" onclick="switchTab('manage')" id="tabManage" style="display: none;">Manage Courses</button>
+                <button class="tab-btn" onclick="switchTab('analytics')" id="tabAnalytics" style="display: none;">Analytics</button>
+            </div>
+            <div class="dashboard-content">
+                <!-- My Courses Tab (for students) / Enrolled Students (for instructors viewing their courses) -->
+                <div id="myCoursesTab" class="tab-content active">
+                    <div class="enrolled-courses" id="enrolledCourses">
+                        <div class="empty-state" id="emptyCoursesState">
+                            <span class="empty-icon">📚</span>
+                            <h3>No Courses Yet</h3>
+                            <p>Start your learning journey by enrolling in a course</p>
+                            <button class="btn btn-primary" onclick="showPage('courses')">Browse Courses</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- My Files Tab -->
+                <div id="myFilesTab" class="tab-content">
+                    <div class="files-header">
+                        <h3>Learning Notes</h3>
+                        <button class="btn btn-primary" onclick="openModal('createFileModal')">
+                            + Create New File
+                        </button>
+                    </div>
+                    <div class="files-list" id="filesList">
+                        <div class="empty-state" id="emptyFilesState">
+                            <span class="empty-icon">📁</span>
+                            <h3>No Files Yet</h3>
+                            <p>Create your first learning note to get started</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manage Courses Tab (Instructor Only) -->
+                <div id="manageCoursesTab" class="tab-content">
+                    <div class="files-header">
+                        <h3>Your Courses</h3>
+                        <button class="btn btn-primary" onclick="openModal('createCourseModal')">
+                            + Create New Course
+                        </button>
+                    </div>
+                    <div class="instructor-courses-list" id="instructorCoursesList">
+                        <div class="empty-state" id="emptyInstructorCoursesState">
+                            <span class="empty-icon">📖</span>
+                            <h3>No Courses Created</h3>
+                            <p>Create your first course and start teaching</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Analytics Tab (Instructor Only) -->
+                <div id="analyticsTab" class="tab-content">
+                    <div class="analytics-container">
+                        <div class="analytics-header">
+                            <h3>Course Analytics</h3>
+                        </div>
+                        <div class="analytics-grid" id="analyticsGrid">
+                            <div class="analytics-card">
+                                <div class="analytics-icon">📚</div>
+                                <div class="analytics-value" id="totalCoursesCreated">0</div>
+                                <div class="analytics-label">Courses Created</div>
+                            </div>
+                            <div class="analytics-card">
+                                <div class="analytics-icon">👥</div>
+                                <div class="analytics-value" id="totalStudents">0</div>
+                                <div class="analytics-label">Total Students</div>
+                            </div>
+                            <div class="analytics-card">
+                                <div class="analytics-icon">📝</div>
+                                <div class="analytics-value" id="totalTasks">0</div>
+                                <div class="analytics-label">Tasks Created</div>
+                            </div>
+                            <div class="analytics-card">
+                                <div class="analytics-icon">⭐</div>
+                                <div class="analytics-value" id="avgCompletion">0%</div>
+                                <div class="analytics-label">Avg. Completion</div>
+                            </div>
+                        </div>
+                        <div class="analytics-details" id="courseAnalyticsDetails">
+                            <!-- Per-course analytics will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('loginModal')">×</button>
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <p>Log in to continue your learning journey</p>
+            </div>
+            <form class="auth-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+            <p class="auth-switch">
+                Don't have an account? <a href="#" onclick="switchAuth('signup')">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Sign Up Role Selection Modal -->
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('signupModal')">×</button>
+            <div class="modal-header">
+                <h2>Join LearnFlow</h2>
+                <p>Choose how you want to use the platform</p>
+            </div>
+            <div class="role-selection">
+                <div class="role-card" onclick="openSignupForm('student')">
+                    <div class="role-icon">🎓</div>
+                    <h3>Student</h3>
+                    <p>Browse courses, enroll, track progress, and manage your learning journey</p>
+                    <ul class="role-features">
+                        <li>✓ Access all courses</li>
+                        <li>✓ Track your progress</li>
+                        <li>✓ Create learning notes</li>
+                        <li>✓ Complete assignments</li>
+                    </ul>
+                    <button class="btn btn-primary btn-full">Sign Up as Student</button>
+                </div>
+                <div class="role-card" onclick="openSignupForm('instructor')">
+                    <div class="role-icon">👨‍🏫</div>
+                    <h3>Instructor</h3>
+                    <p>Create and manage courses, track student progress, and share your knowledge</p>
+                    <ul class="role-features">
+                        <li>✓ Create unlimited courses</li>
+                        <li>✓ Add lessons & tasks</li>
+                        <li>✓ View student analytics</li>
+                        <li>✓ Manage enrollments</li>
+                    </ul>
+                    <button class="btn btn-outline btn-full">Sign Up as Instructor</button>
+                </div>
+            </div>
+            <p class="auth-switch">
+                Already have an account? <a href="#" onclick="switchAuth('login')">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Student Sign Up Form Modal -->
+    <div class="modal-overlay" id="studentSignupModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('studentSignupModal')">×</button>
+            <div class="modal-header">
+                <div class="signup-role-badge student">🎓 Student Account</div>
+                <h2>Create Student Account</h2>
+                <p>Start your learning journey today</p>
+            </div>
+            <form class="auth-form" onsubmit="handleSignup(event, 'student')">
+                <div class="form-group">
+                    <label for="studentName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="studentName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="studentEmail">Email <span class="required">*</span></label>
+                    <input type="email" id="studentEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="studentPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="studentPassword" required placeholder="Create a password (min 6 characters)">
+                </div>
+                <div class="form-group">
+                    <label for="studentConfirmPassword">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="studentConfirmPassword" required placeholder="Confirm your password">
+                </div>
+                <div class="form-group">
+                    <label for="studentInterests">Learning Interests (Optional)</label>
+                    <select id="studentInterests">
+                        <option value="">Select your primary interest</option>
+                        <option value="web">Web Development</option>
+                        <option value="data">Data Science</option>
+                        <option value="design">UI/UX Design</option>
+                        <option value="cloud">Cloud Computing</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create Student Account</button>
+            </form>
+            <p class="auth-switch">
+                <a href="#" onclick="backToRoleSelection()">← Choose different role</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Instructor Sign Up Form Modal -->
+    <div class="modal-overlay" id="instructorSignupModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('instructorSignupModal')">×</button>
+            <div class="modal-header">
+                <div class="signup-role-badge instructor">👨‍🏫 Instructor Account</div>
+                <h2>Create Instructor Account</h2>
+                <p>Share your knowledge with the world</p>
+            </div>
+            <form class="auth-form" onsubmit="handleSignup(event, 'instructor')">
+                <div class="form-group">
+                    <label for="instructorName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="instructorName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="instructorEmail">Email <span class="required">*</span></label>
+                    <input type="email" id="instructorEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="instructorPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="instructorPassword" required placeholder="Create a password (min 6 characters)">
+                </div>
+                <div class="form-group">
+                    <label for="instructorConfirmPassword">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="instructorConfirmPassword" required placeholder="Confirm your password">
+                </div>
+                <div class="form-group">
+                    <label for="instructorExpertise">Area of Expertise <span class="required">*</span></label>
+                    <select id="instructorExpertise" required>
+                        <option value="">Select your expertise</option>
+                        <option value="web">Web Development</option>
+                        <option value="data">Data Science & Analytics</option>
+                        <option value="design">UI/UX Design</option>
+                        <option value="cloud">Cloud & DevOps</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="ai">AI & Machine Learning</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="instructorBio">Short Bio</label>
+                    <textarea id="instructorBio" placeholder="Tell students about yourself and your experience..." rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create Instructor Account</button>
+            </form>
+            <p class="auth-switch">
+                <a href="#" onclick="backToRoleSelection()">← Choose different role</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Tasks Modal -->
+    <div class="modal-overlay" id="tasksModal">
+        <div class="modal modal-lg">
+            <button class="modal-close" onclick="closeModal('tasksModal')">×</button>
+            <div class="modal-header">
+                <h2 id="tasksModalTitle">Course Tasks</h2>
+                <p>Track your progress by completing tasks</p>
+            </div>
+            <div class="tasks-list" id="tasksList">
+                <!-- Tasks will be dynamically inserted -->
+            </div>
+            <div class="tasks-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">0% Complete</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create File Modal -->
+    <div class="modal-overlay" id="createFileModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('createFileModal')">×</button>
+            <div class="modal-header">
+                <h2>Create New File</h2>
+                <p>Enter a name for your learning note</p>
+            </div>
+            <form class="auth-form" onsubmit="handleCreateFile(event)">
+                <div class="form-group">
+                    <label for="fileName">File Name</label>
+                    <input type="text" id="fileName" required placeholder="e.g., JavaScript Notes">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create File</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Course Modal (Instructor Only) -->
+    <div class="modal-overlay" id="createCourseModal">
+        <div class="modal modal-lg">
+            <button class="modal-close" onclick="closeModal('createCourseModal')">×</button>
+            <div class="modal-header">
+                <h2>Create New Course</h2>
+                <p>Fill in the details for your new course</p>
+            </div>
+            <form class="auth-form" onsubmit="handleCreateCourse(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" id="courseTitle" required placeholder="e.g., Advanced JavaScript">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseIcon">Course Icon</label>
+                        <select id="courseIcon" required>
+                            <option value="💻">💻 Programming</option>
+                            <option value="🌐">🌐 Web</option>
+                            <option value="📊">📊 Data</option>
+                            <option value="🎨">🎨 Design</option>
+                            <option value="☁️">☁️ Cloud</option>
+                            <option value="📱">📱 Mobile</option>
+                            <option value="🤖">🤖 AI</option>
+                            <option value="🔒">🔒 Security</option>
+                            <option value="⚙️">⚙️ DevOps</option>
+                            <option value="📚">📚 General</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="courseDescription">Description</label>
+                    <textarea id="courseDescription" required placeholder="Describe what students will learn..." rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="courseLevel">Level</label>
+                        <select id="courseLevel" required>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDuration">Duration</label>
+                        <input type="text" id="courseDuration" required placeholder="e.g., 8 weeks">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseLessons">Number of Lessons</label>
+                        <input type="number" id="courseLessons" required placeholder="e.g., 24" min="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Course Tasks (one per line)</label>
+                    <textarea id="courseTasks" placeholder="Enter tasks, one per line:&#10;Complete module 1&#10;Build a project&#10;Final assessment" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create Course</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Course Modal (Instructor Only) -->
+    <div class="modal-overlay" id="editCourseModal">
+        <div class="modal modal-lg">
+            <button class="modal-close" onclick="closeModal('editCourseModal')">×</button>
+            <div class="modal-header">
+                <h2>Edit Course</h2>
+                <p>Update your course details</p>
+            </div>
+            <form class="auth-form" onsubmit="handleEditCourse(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editCourseTitle">Course Title</label>
+                        <input type="text" id="editCourseTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCourseIcon">Course Icon</label>
+                        <select id="editCourseIcon" required>
+                            <option value="💻">💻 Programming</option>
+                            <option value="🌐">🌐 Web</option>
+                            <option value="📊">📊 Data</option>
+                            <option value="🎨">🎨 Design</option>
+                            <option value="☁️">☁️ Cloud</option>
+                            <option value="📱">📱 Mobile</option>
+                            <option value="🤖">🤖 AI</option>
+                            <option value="🔒">🔒 Security</option>
+                            <option value="⚙️">⚙️ DevOps</option>
+                            <option value="📚">📚 General</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editCourseDescription">Description</label>
+                    <textarea id="editCourseDescription" required rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editCourseLevel">Level</label>
+                        <select id="editCourseLevel" required>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCourseDuration">Duration</label>
+                        <input type="text" id="editCourseDuration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCourseLessons">Number of Lessons</label>
+                        <input type="number" id="editCourseLessons" required min="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Course Tasks (one per line)</label>
+                    <textarea id="editCourseTasks" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit File Modal -->
+    <div class="modal-overlay" id="editFileModal">
+        <div class="modal modal-lg">
+            <button class="modal-close" onclick="closeModal('editFileModal')">×</button>
+            <div class="modal-header">
+                <h2 id="editFileTitle">Edit File</h2>
+            </div>
+            <div class="file-editor">
+                <textarea id="fileContent" placeholder="Start typing your notes..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" onclick="closeModal('editFileModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveFile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
