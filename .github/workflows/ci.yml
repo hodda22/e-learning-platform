@@ -9,12 +9,6 @@ jobs:
   backend:
     name: Backend checks
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('backend/package.json') != '' }}
-
-    defaults:
-      run:
-        working-directory: backend
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,32 +17,36 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: backend/package-lock.json
 
-      - name: Install deps
+      - name: Install + test + smoke (backend)
         run: |
+          if [ ! -f backend/package.json ]; then
+            echo "No backend/package.json found — skipping backend."
+            exit 0
+          fi
+
+          cd backend
+
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
 
-      - name: Run tests (if present)
-        run: npm test --if-present
+          npm test --if-present
 
-      - name: Build (if present)
-        run: npm run build --if-present
+          # Optional smoke test (only if server.js exists)
+          if [ -f server.js ]; then
+            node server.js &
+            PID=$!
+            sleep 2
+            curl -f http://localhost:4000/api/courses
+            kill $PID
+          fi
 
   frontend:
     name: Frontend checks
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('frontend/package.json') != '' }}
-
-    defaults:
-      run:
-        working-directory: frontend
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,20 +55,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
 
-      - name: Install deps
+      - name: Install + test + build (frontend)
         run: |
+          if [ ! -f frontend/package.json ]; then
+            echo "No frontend/package.json found — skipping frontend."
+            exit 0
+          fi
+
+          cd frontend
+
           if [ -f package-lock.json ]; then
             npm ci
           else
             npm install
           fi
 
-      - name: Run tests (if present)
-        run: npm test --if-present
-
-      - name: Build (if present)
-        run: npm run build --if-present
-
+          npm test --if-present
+          npm run build --if-present
