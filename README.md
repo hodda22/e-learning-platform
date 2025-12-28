@@ -1,119 +1,93 @@
-# E-Learning Platform – Phase 1
+# LearnFlow — E-Learning Platform (Phase 2)
 
-## Project Abstract
+A simple web-based e-learning platform (SPA-style UI) where users can browse courses, enroll, track tasks/progress, and manage personal notes.
 
-A simple e-learning platform prototype to demonstrate:
-
-- User authentication **UI only** (no real login logic yet)
-- Course listing from a backend API (with fallback data in the frontend)
-- A basic student dashboard placeholder
-
-This is for our Software Engineering project – **Phase 1** (prototype).
+## Live Demo (Deployment)
+- GitHub Pages: **https://hodda22.github.io/e-learning-platform/**  
+  > If this link shows 404, GitHub Pages must be enabled by the repo admin: **Settings → Pages → Source = GitHub Actions**.
 
 ---
 
-## MVP Features (Phase 1)
+## Features
+### Student
+- Sign up / log in / log out (UI + validation)
+- Browse courses + view course details
+- Enroll in a course (shows under Dashboard)
+- View tasks and toggle completion (progress updates)
+- Notes / Files: create, edit, save, delete (learning notes)
 
-- Home page
-- Login / Signup (UI only, no real auth)
-- Dashboard (placeholder)
-- Courses section  
-  - Reads from backend API: `GET /api/courses`  
-  - Uses fallback data if backend is not running
-- GitHub Issues + Project Board + Branching workflow
+### Instructor (conceptual / limited)
+- Instructor actor exists in docs/diagrams (course management may be limited in current implementation)
 
----
-
-## Team
-
-- **hodda** – Frontend (pages, navigation, basic UI)
-- **eman** – Backend (Node.js API for courses)
-- **ryad** – CSS & Documentation (styling, layout, README)
+### Persistence
+- Data is persisted via **localStorage** (client-side), so progress and notes remain after refresh on the same browser/device.
 
 ---
 
 ## Tech Stack
-
-### Frontend
-
-- Plain **HTML / CSS / JavaScript**
-- No frameworks, no build step
-- Lives in the `frontend/` folder
-
-### Backend
-
-- **Node.js**
-- **Express.js**
-- Port: **4000**  
-  (macOS uses port 5000 for AirPlay, so we use 4000 instead.)
+- Frontend: HTML + CSS + JavaScript
+- Backend: Node.js + Express.js (for simple API endpoints if used)
+- Storage: local JSON / localStorage (depending on feature)
 
 ---
 
-## How to Run Locally
-
-### 1. Frontend (Hodda & Ryad)
-
-The frontend is a simple static prototype.
-
-Open the file:
-
-```bash
-frontend/index.html
-You can:
-Double-click it in Finder / Explorer to open in the browser, or
-In VS Code: right-click index.html → “Open with Live Server” (optional)
-This will show:
-Home section
-Courses section
-Dashboard placeholder
-Login / Signup forms (UI only)
-2. Backend (Eman)
-From the project root:
+## Project Structure
+```txt
+e-learning-platform/
+├── phase2/                 # Final website build for Phase 2 (deploy this)
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+├── frontend/               # (optional/older) frontend folder if present
+├── backend/                # Node/Express backend (optional runtime)
+├── docs/
+│   ├── meetings/           # Scrum meeting summaries (md)
+│   └── diagrams/           # Exported UML diagrams (png/svg)
+└── .github/workflows/      # GitHub Actions (CI + Deploy)
+How to Run Locally
+Option A — Run the website only (Phase 2 UI)
+Open:
+phase2/index.html in your browser
+(Recommended for demo: this is the folder deployed to GitHub Pages.)
+Option B — Run backend (if you want API running)
+Prerequisites
+Node.js 18+ (recommended 20)
+Run
 cd backend
 npm install
-npm run dev
-The server will start on:
+node server.js
+Backend should start on:
 http://localhost:4000
-API Endpoints (Phase 1)
-Method	Endpoint	Description
-GET	/api/courses	Returns all courses
-GET	/api/courses/:id	Returns one course by ID
-Example Response (GET /api/courses)
-[
-  { "id": 1, "title": "Intro to Programming", "level": "Beginner" },
-  { "id": 2, "title": "Web Development with HTML & CSS", "level": "Beginner" },
-  { "id": 3, "title": "JavaScript for Frontend", "level": "Intermediate" }
-]
-Notes
-No database yet – data is stored directly in server.js.
-Frontend calls: http://localhost:4000/api/courses.
-If the backend is not running, the frontend uses fallback data (in script.js).
-Project Structure
-e-learning-platform/
-├── backend/
-│   ├── server.js        # Express server + courses endpoints
-│   └── package.json
-├── frontend/
-│   ├── index.html       # Static UI (Home, Courses, Dashboard, Auth)
-│   ├── style.css        # Styling (Ryad)
-│   └── script.js        # Navigation + API call + fallback data
-└── README.md
-Frontend Behaviour (Phase 1)
-Top navbar buttons switch between sections using JS:
-Home
-Courses
-Dashboard
-Login
-Sign up
-The "Get Started" button on the Home section scrolls to / displays the Sign up form.
-The Courses section:
-Tries to load from GET /api/courses
-If the request fails → displays 3 fallback dummy courses.
-Branching Strategy
-Create a branch for each feature, for example:
-hodda/navigation-home
-eman/api-courses
-ryad/layout-and-css
-Use Pull Requests to merge into main.
-Every commit message must be clear and descriptive.
-Never push features directly to main
+API Endpoints (if backend is enabled)
+GET /api/courses → returns courses list
+If your Phase 2 UI uses localStorage only, the backend is optional.
+CI/CD (Pipeline)
+CI (GitHub Actions)
+Workflow: .github/workflows/ci.yml
+Runs on every push to main and every pull request
+Installs dependencies and runs npm test --if-present and npm run build --if-present
+Deployment (GitHub Pages)
+Workflow: .github/workflows/deploy-pages.yml
+Deploys the phase2/ folder to GitHub Pages (Actions)
+Admin requirement
+Repo Settings → Pages → Source = GitHub Actions
+Documentation (Phase 2 Deliverables)
+SRS / Requirements: (add link/file name here if you have it in repo)
+UML Diagrams (PNG/SVG): docs/diagrams/
+Use-case diagram
+Sequence diagrams (Login, Enroll, Toggle task, Create/Edit note)
+Class diagram
+Component diagram (bonus)
+Test Cases: included in SRS or separate doc (add path here)
+Scrum Meeting Summaries: docs/meetings/
+2025-12-20.md
+2025-12-24.md
+2025-12-28.md
+Project Management (GitHub)
+Backlog / Issues: GitHub Issues (with labels: priority + area)
+Scrum Board: GitHub Projects board (Backlog → To Do → In Progress → Done)
+Pull Requests: All changes should go through PRs (branch → PR → merge)
+Team
+Eman Mohammed — 222000058
+Hodda Emad — 221001807
+Ryad Elshemy — 221001488
